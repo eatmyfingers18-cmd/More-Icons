@@ -1,0 +1,43 @@
+cmake_minimum_required(VERSION 3.21)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+if ("${CMAKE_SYSTEM_NAME}" STREQUAL "iOS" OR IOS)
+    set(CMAKE_OSX_ARCHITECTURES "arm64")
+else()
+    set(CMAKE_OSX_ARCHITECTURES "arm64;x86_64")
+endif()
+set(CMAKE_CXX_VISIBILITY_PRESET hidden)
+set(GEODE_DISABLE_PRECOMPILED_HEADERS ON)
+set(GEODE_CODEGEN_EXTRA_ARGS "--skip-pugixml")
+
+project(MoreIcons VERSION 2.0.0)
+
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS src/*.cpp)
+
+add_library(${PROJECT_NAME} SHARED ${SOURCES})
+
+target_include_directories(${PROJECT_NAME} PRIVATE include)
+
+if (PROJECT_IS_TOP_LEVEL)
+    target_compile_definitions(${PROJECT_NAME} PRIVATE MORE_ICONS_EXPORTING FMT_CPP_LIB_FILESYSTEM=0)
+endif()
+
+if (NOT DEFINED ENV{GEODE_SDK})
+    message(FATAL_ERROR "Unable to find Geode SDK! Please define GEODE_SDK environment variable to point to Geode")
+else()
+    message(STATUS "Found Geode: $ENV{GEODE_SDK}")
+endif()
+
+set(GEODE_NO_PUGIXML_HEADER ON)
+add_subdirectory($ENV{GEODE_SDK} ${CMAKE_CURRENT_BINARY_DIR}/geode)
+
+CPMAddPackage("gh:zeux/pugixml@1.15")
+CPMAddPackage("gh:hiimjasmine00/texpack@0.5.3")
+CPMAddPackage("gh:hiimjasmine00/jasmine-tools@1.5.0")
+if (WIN32)
+    target_compile_definitions(pugixml-static PRIVATE _HAS_ITERATOR_DEBUGGING=0)
+    target_compile_definitions(texpack PRIVATE _HAS_ITERATOR_DEBUGGING=0)
+endif()
+target_link_libraries(${PROJECT_NAME} texpack jasmine-tools)
+
+setup_geode_mod(${PROJECT_NAME})

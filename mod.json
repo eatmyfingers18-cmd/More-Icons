@@ -1,0 +1,74 @@
+{
+    "geode": "5.3.0",
+    "gd": {
+        "android": "2.2081",
+        "win": "2.2081",
+        "mac": "2.2081",
+        "ios": "2.2081"
+    },
+    "version": "v2.0.0",
+    "id": "hiimjustin000.more_icons",
+    "name": "More Icons",
+    "developer": "hiimjasmine00",
+    "description": "Custom icons without the hassle.",
+    "dependencies": {
+        "geode.node-ids": ">=v1.17.0",
+        "geode.texture-loader": {
+            "version": ">=v1.9.0",
+            "required": false
+        }
+    },
+    "resources": {
+        "sprites": [
+            "resources/icons/*.png",
+            "resources/previews/*.png",
+            "resources/sprites/*.png"
+        ]
+    },
+    "api": {
+        "include": [
+            "include/*.hpp"
+        ]
+    },
+    "settings": {
+        "log-level": {
+            "name": "Log Level",
+            "description": "The log level for More Icons.",
+            "type": "string",
+            "one-of": [
+                "Debug",
+                "Info",
+                "Warning",
+                "Error",
+                "None"
+            ],
+            "default": "Debug"
+        },
+        "traditional-packs": {
+            "name": "Load from Traditional Packs",
+            "description": "Whether to load icons from traditional icon packs.",
+            "type": "bool",
+            "default": true
+        },
+        "preload-icons": {
+            "name": "Preload Icon Textures",
+            "description": "Whether to preload icon textures on startup.",
+            "type": "bool",
+            "default": false
+        }
+    },
+    "links": {
+        "community": "https://discord.gg/QVKmbvBXA7",
+        "source": "https://github.com/hiimjasmine00/MoreIcons",
+        "homepage": "https://more-icons.hiimjasmine00.com"
+    },
+    "tags": [
+        "content",
+        "customization",
+        "enhancement",
+        "gameplay",
+        "interface",
+        "modtober24",
+        "offline"
+    ]
+}
